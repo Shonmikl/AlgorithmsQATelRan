@@ -1,0 +1,53 @@
+"Merge Sort"
+1. Метод который разделяет массив на подмассивы с рекурсией. (sort)
+2. Метод который собирает массивы обратно и производит сравнение.(merge)
+[58, 8, 7, 65, 219, 84, 2]
+
+divide(array[]) {
+var arrayLength = array[].length;
+if (arrayLenght == 1) break;
+
+[58 8 7] **** [65 219 84 2]
+middle = arrayLength / 2;
+
+new leftArray[middle];
+new rightArray[arrayLength - middle];
+
+loop(index = 0, index < middle, index++) { leftArray[index] = array[index] };
+loop(index = middle, index < array[]Length, index++) { rightArray[index] = array[index] };
+
+divide(leftArray[]); [58 8 7] -> [58]left and [8 7]right
+divide(rightArray[]); [65 219 84 2]
+  			[**]					 [*]					 [*]
+merge(array[], leftArray[], rightArray[]);
+}
+
+merge(array[], leftArray[], rightArray[]) {
+	var leftLengthArray = leftArray[].length;	[58] = 1
+	var rightLengthArray = rightArray[].length;	[7] = 1
+
+  var l = 0;
+  var r = 0;
+  var arrayIndex = 0;
+
+  while loop(l < leftLengthArray & r < rightLengthArray ) {
+  	if(leftArray[l] < rightArray[r]) {
+    	array[arrayIndex] = leftArray[l];
+    	l++;
+   	  arrayIndex++;
+  	}
+  	if(rightArray[r] < leftArray[l]) {
+    	array[arrayIndex] = rightArray[r]
+    	r++;
+    	arrayIndex++;
+  	}
+  }
+
+  loop(ind = l, ind < leftLengthArray, ind++ ) {
+    array[indexArray++] = leftArray[ind] // [ 7 8 58 ..........]
+  }
+
+  loop(ind = r, ind < rightLengthArray, ind++ ) {
+    array[indexArray++] = rightArray[r] // [ 7 8 58 ...256....]
+  }
+}

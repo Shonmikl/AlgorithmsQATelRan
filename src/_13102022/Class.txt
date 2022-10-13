@@ -1,0 +1,4 @@
+- Dynamic prog;
+- Task1;
+- Task2;
+- Algorithm Кнута-Мориса-Пратта

@@ -1,3 +1,5 @@
+package _06102022;
+
 import java.util.Arrays;
 
 public class MergeSort {
@@ -29,8 +31,6 @@ public class MergeSort {
         sort(leftArray);
         sort(rightArray);
         merge(array, leftArray, rightArray);
-
-
     }
 
     private static void merge(int[] array, int[] leftArray, int[] rightArray) {

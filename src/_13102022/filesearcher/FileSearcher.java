@@ -1,4 +1,4 @@
-package _13102022;
+package _13102022.filesearcher;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class FileSearcher {
                         getFiles(file, fileList);
                         //*******************************************************************************
                     } else {
-                        if(file.getName().toLowerCase().endsWith(".jpg")) {
+                        if(file.getName().toLowerCase().endsWith(".mp3")) {
                             fileList.add(file);
                         }
                     }

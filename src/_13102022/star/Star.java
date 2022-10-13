@@ -1,4 +1,4 @@
-package _13102022;
+package _13102022.star;
 
 /**
  * way(n, m) = way(n-1, m) + way(n, m-1);

@@ -7,7 +7,7 @@ import java.util.List;
 public class FileSearcher {
     public static void main(String[] args) {
         ArrayList<File> fileList = new ArrayList<>();
-        getFiles(new File("D:\\"), fileList);
+        getFiles(new File("E:\\"), fileList);
         for(File file : fileList) {
             System.out.println(file.getAbsolutePath());
         }
@@ -17,14 +17,15 @@ public class FileSearcher {
         if(rootFile.isDirectory()) {
             System.out.println("searching...." + rootFile.getAbsolutePath());
             File[] directoryFiles = rootFile.listFiles();
-            assert directoryFiles != null;
-            for(File file: directoryFiles) {
-                if(file.isDirectory()) {
-                    getFiles(file, fileList);
-                    //*******************************************************************************
-                } else {
-                    if(file.getName().toLowerCase().endsWith(".jpg")) {
-                        fileList.add(file);
+            if(directoryFiles != null) {
+                for(File file: directoryFiles) {
+                    if(file.isDirectory()) {
+                        getFiles(file, fileList);
+                        //*******************************************************************************
+                    } else {
+                        if(file.getName().toLowerCase().endsWith(".jpg")) {
+                            fileList.add(file);
+                        }
                     }
                 }
             }

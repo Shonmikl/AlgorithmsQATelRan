@@ -24,7 +24,10 @@ public class Test1 {
 
 
     public static void main(String[] args) {
-        int[] array = {11, 12, 55, 11, 55, 12};
-        getMin(array);
+//        int[] array = {11, 12, 55, 11, 55, 12};
+//        getMin(array);
+        char a = 1234;
+        a++;
+        System.out.println(a);
     }
 }

@@ -13,12 +13,12 @@ import java.util.List;
 //2.2 Написать логику подсчета в зависимости от роли
 public class Main {
     public static void main(String[] args) {
-        String expressionText = "122 -1* (11 + 11)";
+        String expressionText = "122 - 1 * (11 + 11)";
         //анализ строки
         List<Lexeme> lexemes = lexAnalyze(expressionText);
         //вычисление выражения
         LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
-        System.out.println(lexemeBuffer);
+        System.out.println(expr(lexemeBuffer));
 
     }
 
@@ -56,6 +56,37 @@ public class Main {
                     "type=" + type +
                     ", value='" + value + '\'' +
                     '}';
+        }
+    }
+
+    //Вспомогательный класс
+    //В данном классе мы сохраняем всю инфу нашего прохода по массиву
+    public static class LexemeBuffer {
+        private int pos;
+        public List<Lexeme> lexemes;
+
+        @Override
+        public String toString() {
+            return "LexemeBuffer{" +
+                    "pos=" + pos +
+                    ", lexemes=" + lexemes +
+                    '}';
+        }
+
+        public LexemeBuffer(List<Lexeme> lexemes) {
+            this.lexemes = lexemes;
+        }
+
+        public Lexeme next() {
+            return lexemes.get(pos++);
+        }
+
+        public void back() {
+            pos--;
+        }
+
+        public int getPos() {
+            return pos;
         }
     }
 
@@ -137,28 +168,7 @@ public class Main {
         return lexemes;
     }
 
-    //Вспомогательный класс
-    //В данном классе мы сохраняем всю инфу нашего прохода по массиву
-    public static class LexemeBuffer {
-        private int pos;
-        public List<Lexeme> lexemes;
 
-        public LexemeBuffer(List<Lexeme> lexemes) {
-            this.lexemes = lexemes;
-        }
-
-        public Lexeme next() {
-            return lexemes.get(pos++);
-        }
-
-        public void back() {
-            pos--;
-        }
-
-        public int getPos() {
-            return pos;
-        }
-    }
 
     //Лексикографический анализатор готов.
     //Пишем синтаксический анализатор

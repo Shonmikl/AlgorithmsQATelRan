@@ -13,32 +13,25 @@ import java.util.List;
 //2.2 Написать логику подсчета в зависимости от роли
 public class Main {
     public static void main(String[] args) {
-        String expressionText = "122 - 1 * (11 + 11)";
-        //анализ строки
+        String expressionText = "122 - 1 * (11* 2)";
         List<Lexeme> lexemes = lexAnalyze(expressionText);
-        //вычисление выражения
+        //после всего кода запустим
         LexemeBuffer lexemeBuffer = new LexemeBuffer(lexemes);
         System.out.println(expr(lexemeBuffer));
-
     }
 
-    //Тип лексем
+    //1. Тип Лексем
     public enum LexemeType {
-        LEFT_BRACKET,
-        RIGHT_BRACKET,
-        OP_PLUS,
-        OP_MINUS,
-        OP_MUL,
-        OP_DEV,
+        LEFT_BRACKET, RIGHT_BRACKET,
+        OP_PLUS, OP_MINUS, OP_MUL, OP_DIV,
         NUMBER,
-        END
+        END;
     }
 
-    //Класс для представления лексем
-    // + для мэтчинга Стринги и LexemeType
+    //2. Класс для представления отдельной лексемы
     public static class Lexeme {
-        LexemeType type;
-        String value;
+        LexemeType type; //тип лексемы
+        String value; // чем является в тексте
 
         public Lexeme(LexemeType type, String value) {
             this.type = type;
@@ -58,208 +51,206 @@ public class Main {
                     '}';
         }
     }
-
-    //Вспомогательный класс
-    //В данном классе мы сохраняем всю инфу нашего прохода по массиву
+    //5. Вспомогательный класс
+    //тут мы сохраним всю инфу прохода по массиву
     public static class LexemeBuffer {
         private int pos;
-        public List<Lexeme> lexemes;
 
-        @Override
-        public String toString() {
-            return "LexemeBuffer{" +
-                    "pos=" + pos +
-                    ", lexemes=" + lexemes +
-                    '}';
-        }
+        public List<Lexeme> lexemes;
 
         public LexemeBuffer(List<Lexeme> lexemes) {
             this.lexemes = lexemes;
         }
 
+        //получаем лексемы
         public Lexeme next() {
             return lexemes.get(pos++);
         }
 
+        //если надо вернуться назад в массиве
         public void back() {
             pos--;
         }
 
+        //какая текущая позиция
         public int getPos() {
             return pos;
         }
     }
 
-    //Функция лексического анализа
-    //Принимает строку с выражением и возвращает массив лексем
+    //3. Функция лексического анализа
+    //принимает строку с выражением и выдает массив лексем
+
     public static List<Lexeme> lexAnalyze(String expText) {
-        //Создать этот самый массив
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         int pos = 0;
-        //Пока не дошли до конца текста
+        //пока не дошли до конца текста
         //будем идти по строке и генерировать лексемы
-        while (pos < expText.length()) {
-
+        while (pos< expText.length()) {
+            //берем символ из текста и смотрим что это
+            // и добавляем в массив
             char c = expText.charAt(pos);
             switch (c) {
                 case '(':
                     lexemes.add(new Lexeme(LexemeType.LEFT_BRACKET, c));
-                    //двигаемся дальше
+                    //увеличиваем позицию в строке на единицу
                     pos++;
+                    //прерываем цикл и начинаем новый
                     continue;
                 case ')':
                     lexemes.add(new Lexeme(LexemeType.RIGHT_BRACKET, c));
-                    //двигаемся дальше
                     pos++;
                     continue;
                 case '+':
                     lexemes.add(new Lexeme(LexemeType.OP_PLUS, c));
-                    //двигаемся дальше
                     pos++;
                     continue;
                 case '-':
                     lexemes.add(new Lexeme(LexemeType.OP_MINUS, c));
-                    //двигаемся дальше
                     pos++;
                     continue;
                 case '*':
                     lexemes.add(new Lexeme(LexemeType.OP_MUL, c));
-                    //двигаемся дальше
                     pos++;
                     continue;
                 case '/':
-                    lexemes.add(new Lexeme(LexemeType.OP_DEV, c));
-                    //двигаемся дальше
+                    lexemes.add(new Lexeme(LexemeType.OP_DIV, c));
                     pos++;
                     continue;
                 default:
-                    //тут проверяем цифры
-                    //если это цифры
+                    //далее проверяем на цифры
                     if (c <= '9' && c >= '0') {
-                        //У нас должно быть представление
+                        //создаем стринг билдер куда мы будем добавлять символы
                         StringBuilder sb = new StringBuilder();
-                        //берем символ из текста
-                        //и смотрим что это за лексема и добавляем в наш массив
-                        //пока не встретиться что то другое и склеиваем их в одно число
-                        //и уже полученное число добавляем в массив лексем
-                        do {//тк мы точно знаем что там цифра
+                        //смысл цикла что мы выписываем все цифры и добавляем в массив
+                        //лексем пока не встретиться что то другое и склеиваем их в одно число
+                        //после этого число добавляем в массив лексем
+                        do {//используем do тк знаем что тут цифра
                             sb.append(c);
                             pos++;
-                            //если достигли конца строки, то брейк
+                            //если достигли конца строки то брейк
                             if (pos >= expText.length()) {
                                 break;
                             }
+                            //достаем след символ из строки
                             c = expText.charAt(pos);
                         } while (c <= '9' && c >= '0');
-                        //тип цифра относится к Намбер
-                        lexemes.add(new Lexeme(LexemeType.NUMBER, c));
+                        //тип лексем это намбер и текст кторый ему соответствует
+                        lexemes.add(new Lexeme(LexemeType.NUMBER, sb.toString()));
                     } else {
-                        // а если не число? и символ не пробел?
+                        //а если не число
+                        //если символ не пробел
                         if (c != ' ') {
-                            //тогда у нас ошибка в выражении
-                            throw new RuntimeException("Unsupported char: " + c);
+                            //то в нашем выражении ошибка и надо прерывать анализ
+                            throw new RuntimeException("Unexpected character: " + c);
                         }
-                        //а если пробел то игнорим
+                        //а если пробел то после его игнорим
                         pos++;
                     }
             }
         }
+        //в самом конце добавим лексему конца
+        //и вернем массив лексем
         lexemes.add(new Lexeme(LexemeType.END, ""));
         return lexemes;
     }
 
+    //4. Лексикографический анализатор написали теперь можно написать синтаксический
+    //и вычислять выражение
 
+    //6. напишем методы
 
-    //Лексикографический анализатор готов.
-    //Пишем синтаксический анализатор
-
-    /**
-     * 25 + 6 * (11 - 3)
-     * factor -> это число[Number] после которого (expression)
-     * multdiv -> factor(* expression)
-     * plusminus -> multdiv(expression)
-     * expr -> consist of *
-     */
-
-    //25 + 6 * (11 +8)
-    //из чего состоит наше выражение
     public static int expr(LexemeBuffer lexemes) {
         Lexeme lexeme = lexemes.next();
-        //сделать проверку на пустое выражение
-        //""
-        //если первая лексема это конец строки то вернем 0
+        //сделаем проверку на пустое выражение
+        //(без него можно и обойтись)
+        //если первая лексема конец строки то вернем 0
         if (lexeme.type == LexemeType.END) {
             return 0;
         } else {
-            //если не 0 то вернемся назад
-            //и запустим +-
+            //иначе вернемся назад
+            //и запустим вычисления +-
             lexemes.back();
             return plusminus(lexemes);
         }
     }
 
-    private static int factor(LexemeBuffer lexemes) {
-        //читаем лексему
-        Lexeme lexeme = lexemes.next();
-        //проверяем ее тип
-        switch (lexeme.type) {
-            case NUMBER: //если это число
-                return Integer.parseInt(lexeme.value);
-            case LEFT_BRACKET: //если левая скобка
-                //верни значение из скобок
-                int value = expr(lexemes);
-                //25+9*(5-4)
-                lexeme = lexemes.next();
-                // а если нет правой скобки то выражение не верное 25+(4+6
-                if (lexeme.type != LexemeType.RIGHT_BRACKET) {
-                    throw new RuntimeException("Some information");
-                    //todo можно написать в каком именно месте ошибка
-                }
-                return value;
-            default:
-                throw new RuntimeException("Some information");
-
-        }
-    }
-
-
+    //6.3
     public static int plusminus(LexemeBuffer lexemes) {
         int value = multdiv(lexemes);
         while (true) {
             Lexeme lexeme = lexemes.next();
-            //25+6*(8-9)
             switch (lexeme.type) {
-                case OP_PLUS -> value = value + multdiv(lexemes);
-                case OP_MINUS -> value = value - multdiv(lexemes);
-                case END, RIGHT_BRACKET -> {
+                case OP_PLUS:
+                    value += multdiv(lexemes);
+                    break;
+                case OP_MINUS:
+                    value -= multdiv(lexemes);
+                    break;
+                case END:
+                case RIGHT_BRACKET:
                     lexemes.back();
                     return value;
-                }
-                default -> throw new RuntimeException("Some information");
+                default:
+                    throw new RuntimeException("Unexpected token: " + lexeme.value
+                            + " at position: " + lexemes.getPos());
             }
         }
     }
 
-    private static int multdiv(LexemeBuffer lexemes) {
-        //значение первого числа
+    //6.2
+    public static int multdiv(LexemeBuffer lexemes) {
+        //значение первого фактора
         int value = factor(lexemes);
-        //25+6*9
         while (true) {
-            //мы должны достать след лексему
+            //достаем след лексему
             Lexeme lexeme = lexemes.next();
             switch (lexeme.type) {
-                case OP_MUL -> value = value * factor(lexemes);
-                case OP_DEV -> value = value / factor(lexemes);
-                case END, RIGHT_BRACKET, OP_PLUS, OP_MINUS -> {
-                    //25+6*8
-                    //если не умножить и не разделить
-                    //то возвращаем указатель назад
-                    //и возвращаем позицию первого множителя
+                case OP_MUL:
+                    value *= factor(lexemes);
+                    break;
+                case OP_DIV:
+                    value /= factor(lexemes);
+                    break;
+                case END:
+                case RIGHT_BRACKET:
+                case OP_PLUS:
+                case OP_MINUS:
+
+                    //если не умножить и не разделить то возвращаем указатель назад
+                    // и возвращаем позицию первого множителя
                     lexemes.back();
                     return value;
-                }
-                default -> throw new RuntimeException("Some information");
+                default:
+                    throw new RuntimeException("Unexpected token: " + lexeme.value
+                            + " at position: " + lexemes.getPos());
             }
+        }
+    }
+    //6.1 напишем методы
+
+    public static int factor(LexemeBuffer lexemes) {
+        //читаем лексему
+        Lexeme lexeme = lexemes.next();
+        //проверяем ее тип
+        switch (lexeme.type) {
+            case NUMBER: //если номер то возвращаем само число
+                return Integer.parseInt(lexeme.value);
+            case LEFT_BRACKET:
+                //если левая скобка то это выражение
+                int value = expr(lexemes);
+                lexeme = lexemes.next();
+                //если нет правой скобки то выражение не верно написано
+                if (lexeme.type != LexemeType.RIGHT_BRACKET) {
+                    throw new RuntimeException("Unexpected token: " + lexeme.value
+                            //и пишем в какой позиции у нас проблемы
+                            + " at position: " + lexemes.getPos());
+
+                }
+                return value;
+            default:
+                throw new RuntimeException("Unexpected token: " + lexeme.value
+                        + " at position: " + lexemes.getPos());
         }
     }
 }

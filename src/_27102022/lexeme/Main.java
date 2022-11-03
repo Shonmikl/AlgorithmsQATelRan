@@ -181,19 +181,14 @@ public class Main {
         while (true) {
             Lexeme lexeme = lexemes.next();
             switch (lexeme.type) {
-                case OP_PLUS:
-                    value += multdiv(lexemes);
-                    break;
-                case OP_MINUS:
-                    value -= multdiv(lexemes);
-                    break;
-                case END:
-                case RIGHT_BRACKET:
+                case OP_PLUS -> value += multdiv(lexemes);
+                case OP_MINUS -> value -= multdiv(lexemes);
+                case END, RIGHT_BRACKET -> {
                     lexemes.back();
                     return value;
-                default:
-                    throw new RuntimeException("Unexpected token: " + lexeme.value
-                            + " at position: " + lexemes.getPos());
+                }
+                default -> throw new RuntimeException("Unexpected token: " + lexeme.value
+                        + " at position: " + lexemes.getPos());
             }
         }
     }
@@ -206,24 +201,17 @@ public class Main {
             //достаем след лексему
             Lexeme lexeme = lexemes.next();
             switch (lexeme.type) {
-                case OP_MUL:
-                    value *= factor(lexemes);
-                    break;
-                case OP_DIV:
-                    value /= factor(lexemes);
-                    break;
-                case END:
-                case RIGHT_BRACKET:
-                case OP_PLUS:
-                case OP_MINUS:
+                case OP_MUL -> value *= factor(lexemes);
+                case OP_DIV -> value /= factor(lexemes);
+                case END, RIGHT_BRACKET, OP_PLUS, OP_MINUS -> {
 
                     //если не умножить и не разделить то возвращаем указатель назад
                     // и возвращаем позицию первого множителя
                     lexemes.back();
                     return value;
-                default:
-                    throw new RuntimeException("Unexpected token: " + lexeme.value
-                            + " at position: " + lexemes.getPos());
+                }
+                default -> throw new RuntimeException("Unexpected token: " + lexeme.value
+                        + " at position: " + lexemes.getPos());
             }
         }
     }

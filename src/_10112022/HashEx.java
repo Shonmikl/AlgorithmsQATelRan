@@ -1,5 +1,6 @@
 package _10112022;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class HashEx {
@@ -25,5 +26,6 @@ public class HashEx {
         int h1 = e1.hashCode();
         int h2 = e2.hashCode();
         System.out.println(h1==h2);
+        ArrayList<Integer> list = new ArrayList<>(200_000);
     }
 }

@@ -4,15 +4,15 @@
 Тема 4. Introduction to Divide and Conquer Algorithms. Examples++
 Тема 5. Merge Sort++
 Тема 6. Quick Sort++
-!!Тема 7. Dynamic Arrays (Array List) and amortized analysis
-!!Тема 8. Dynamic Programming
+!!---Тема 7. Dynamic Arrays (Array List) and amortized analysis
+!!---Тема 8. Dynamic Programming
 Тема 9. Linked List++
 Тема 10. Stacks and Queues++
 !!Тема 11. Test. Introduction to Greedy Algorithms. Examples
 !!Тема 12. Knapsack with and without Repetitions problems
 Тема 13. Trees. Binary Tree, AVL Tree.++
 Тема 14. Binary Search Tree++
-!!Тема 15. Heap, Heap Sort
-!!Тема 16. Hashing, Hash Functions and Hash Tables
+!!---Тема 15. Heap, Heap Sort
+!!---Тема 16. Hashing, Hash Functions and Hash Tables
 Тема 17. Popular algorithms for technical interviews++
 Тема 18. Test. Summarizing++

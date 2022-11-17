@@ -9,7 +9,7 @@
 Тема 9. Linked List++
 Тема 10. Stacks and Queues++
 !!Тема 11. Test. Introduction to Greedy Algorithms. Examples
-!!Тема 12. Knapsack with and without Repetitions problems
+Тема 12. Knapsack with and without Repetitions problems
 Тема 13. Trees. Binary Tree, AVL Tree.++
 Тема 14. Binary Search Tree++
 Тема 15. Heap, Heap Sort++

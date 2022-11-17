@@ -23,7 +23,7 @@ public class FileSearcher {
                         getFiles(file, fileList);
                         //*******************************************************************************
                     } else {
-                        if(file.getName().toLowerCase().endsWith(".mp3")) {
+                        if(file.getName().toLowerCase().endsWith(".jpg")) {
                             fileList.add(file);
                         }
                     }

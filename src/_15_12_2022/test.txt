@@ -1,0 +1,8 @@
+The sequence of insertion
+1, 2, 4 will lead to imbalance. Which rotation can be used to balance the tree
+
+Which of the following is a double rotation
+LL
+LR
+RR
+LRL

@@ -8,12 +8,12 @@ public class HashEx {
     int age;
     double salary;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HashEx hashEx)) return false;
-        return age == hashEx.age && Double.compare(hashEx.salary, salary) == 0;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof HashEx hashEx)) return false;
+//        return age == hashEx.age && Double.compare(hashEx.salary, salary) == 0;
+//    }
 
     @Override
     public int hashCode() {

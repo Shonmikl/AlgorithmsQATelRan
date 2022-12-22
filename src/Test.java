@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -60,7 +61,13 @@ public class Test {
     }
 
     private static long getFibonacciLoop(int digit) {
-        return 0;
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(0);
+        arr.add(1);
+        for(int i = 2; i <= digit; i++) {
+            arr.add(arr.get(i-1) + arr.get(i-2));
+        }
+        return arr.get(digit-1);
     }
 
     private static long getFibonacciRecursive(int digit) {
@@ -69,6 +76,7 @@ public class Test {
 
     public static void main(String[] args) {
         //System.out.println(getLetterCount("AASDDAFFGGHJYYY"));
-        System.out.println(getFibonacciStreams(10));
+        System.out.println(getFibonacciStreams(15));
+        System.out.println(getFibonacciLoop(15));
     }
 }
